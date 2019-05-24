@@ -2,7 +2,7 @@
 
 let fn_getBlogList = async (ctx, next) => {
   var pageSize = ctx.params.pageSize || 10,
-      pageIndex = ctx.params.pageIndex || 1;
+    pageIndex = ctx.params.pageIndex || 1;
   ctx.response.body = {
     code: 0,
     success: true,
@@ -13,6 +13,8 @@ let fn_getBlogList = async (ctx, next) => {
     }]
   }
 }
+
+
 
 module.exports = {
   'GET /api/getBlogList': fn_getBlogList
