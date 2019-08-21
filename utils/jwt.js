@@ -12,6 +12,11 @@ let generationToken = function (data) {
   })
 }
 
+// 解析token
+let decodeToken = function (token) {
+  return jwt.decode(token)
+}
+
 // 验证token
 let verifyToken = function (token) {
   return jwt.verify(token, cert)
@@ -20,5 +25,6 @@ let verifyToken = function (token) {
 
 module.exports = {
   generationToken,
-  verifyToken
+  verifyToken,
+  decodeToken
 }

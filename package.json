@@ -4,14 +4,23 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "chalk": "^2.4.2",
+    "glob": "^7.1.4",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.6.2",
+    "koa-body": "^4.1.1",
     "koa-bodyparser": "^4.2.1",
+    "koa-compose": "^4.1.0",
+    "koa-json-error": "^3.1.2",
+    "koa-logger": "^3.2.1",
+    "koa-multer": "^1.0.2",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "mysql": "^2.16.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon index.js"

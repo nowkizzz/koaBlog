@@ -46,7 +46,20 @@ let addUsers = async (ctx, next) => {
 
 // 更新token
 let refreshToken = async (ctx, next) => {
-
+  let tokenPayload = ctx.request.header.token;
+  let info = tokenTool.decodeToken(tokenPayload);
+  console.log(info, 33333333)
+  if (info) {
+    ctx.response.body = {
+      code: 0,
+      data: tokenTool.generationToken({ name: info.name, password: info.password })
+    }
+  } else {
+    ctx.response.body = {
+      code: 1,
+      message: '请重新登录'
+    }
+  }
 }
 
 // 登录 用到jwt
@@ -85,10 +98,10 @@ let login = async (ctx, next) => {
 
 // 测试使用jwt的返回 get方法
 let getList = async (ctx, next) => {
-  console.log(33333, ctx.request)
-  let requestData = ctx.params;
+  // console.log(33333, ctx.request)
+  let requestData = ctx.request.query;
   let headerToken = ctx.request.header.token
-  console.log(headerToken, 444444444)
+  console.log(requestData, 444444444)
   if (headerToken) {
     try {
       let isSuccess = tokenTool.verifyToken(headerToken);
@@ -120,4 +133,5 @@ module.exports = {
   'POST /api/addUsers': addUsers,
   'POST /api/login': login,
   'GET /api/getList': getList,
+  'POST /api/refreshToken': refreshToken
 }
