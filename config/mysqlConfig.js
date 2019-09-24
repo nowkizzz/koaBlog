@@ -1,7 +1,7 @@
 const config = {
   database: 'blog',
   user: 'root',
-  password: '123456',
+  password: 'Arsenal0104!',
   port: '3306',
   host: 'localhost',
   multipleStatements: true

@@ -2,7 +2,7 @@ const Router = require('koa-router');
 const router = new Router()
 
 
-router.prefix('/user')
+router.prefix('/api/user')
 
 router.get('/getBody', (ctx, next) => {
   ctx.response.body = {

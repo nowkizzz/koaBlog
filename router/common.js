@@ -4,6 +4,9 @@ const fs = require('fs')
 const path = require('path')
 const multer = require('koa-multer');
 
+router.prefix('/api/common')
+
+
 // https://blog.csdn.net/simple__dream/article/details/80890696
 // koaBody的multipart: true
 // 单个文件上传 使用koa-body
