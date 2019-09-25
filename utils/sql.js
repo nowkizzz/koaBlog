@@ -10,6 +10,22 @@ const CREATE_TABLE = `CREATE TABLE IF NOT EXISTS posts(
 // 查询数据表
 const QUERY_TABLE = (tableName) => `SELECT * FROM ${tableName};`
 
+/** 
+ *  查询相应的数据
+ * @params options
+ * @params tableName  数据表
+ * @params selectQuery 选择的数据数组
+ * */ 
+const SELECT_PARAMS_TABLE = (options) => {
+  let params = '*'
+  if (Array.isArray(options.selectQuery)) {
+    params = options.selectQuery.join(',')
+  }
+  let pageIndex = options.pageIndex || 1;
+  let pageSize = options.pageSize || 10
+  return `SELECT COUNT(*) FROM ${options.tableName};SELECT ${params} FROM ${options.tableName} limit ${(pageIndex - 1) * pageSize},${pageIndex*pageSize};`
+}
+
 // 插入数据 使用, , 用法
 const INSERT_TABLE_COMMON = (tableName, obj) => {
   let keys = [], vals = [];
@@ -50,5 +66,6 @@ module.exports = {
   INSERT_TABLE,
   UPDATE_TABLE,
   DELETE_TABLE,
-  INSERT_TABLE_COMMON
+  INSERT_TABLE_COMMON,
+  SELECT_PARAMS_TABLE
 }

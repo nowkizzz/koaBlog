@@ -22,13 +22,13 @@ let query = function (sql, values) {
   }).then(res => {
     return {
       success: true,
-      code: 0,
+      code: 200,
       data: res
     }
   }).catch(err => {
     return {
       success: false,
-      code: 1,
+      code: 400,
       data: err
     }
   })
