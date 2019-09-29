@@ -2,7 +2,7 @@ const Router = require('koa-router');
 const router = new Router()
 let tokenTool = require('../utils/jwt.js')
 
-router.prefix('/api/user')
+router.prefix('/api')
 
 router.get('/getBody', (ctx, next) => {
   ctx.response.body = {
@@ -21,6 +21,11 @@ router.post('/editBody', (ctx, next) => {
     message: '成功',
     data: requestData
   }
+})
+
+// 获取个人信息
+router.get('/user', (ctx, next) => {
+
 })
 
 router.post('/login', (ctx, next) => {

@@ -22,10 +22,13 @@ let query = function (sql, values) {
   }).then(res => {
     return {
       success: true,
-      code: 200,
+      code: res.code,
       data: res
     }
   }).catch(err => {
+    console.log('====================================');
+    console.log('错误返回', err);
+    console.log('====================================');
     return {
       success: false,
       code: 400,

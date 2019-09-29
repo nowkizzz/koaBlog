@@ -1,10 +1,10 @@
 const Router = require('koa-router');
 const router = new Router()
 const query = require('../utils/query')
-const { SELECT_PARAMS_TABLE, INSERT_TABLE_COMMON, INSERT_TABLE} = require('../utils/sql')
-const { getFormatTime} = require('../utils/tool.js')
+const { SELECT_List_TABLE, INSERT_TABLE, DELETE_TABLE } = require('../utils/sql')
+const { getFormatTime } = require('../utils/tool.js')
 
-router.prefix('/api/blog')
+router.prefix('/api')
 
 // 查询博客列表
 router.get('/blogs', async (ctx, next) => {
@@ -12,15 +12,15 @@ router.get('/blogs', async (ctx, next) => {
   console.log(ctx.params);
   console.log('====================================');
   // SQL语句查询数据库
-  let res = await query(SELECT_PARAMS_TABLE({
-    tableName: 'bloglist', 
+  let res = await SELECT_List_TABLE({
+    tableName: 'bloglist',
     // selectQuery: ['id', 'title', 'author'],
     pageSize: ctx.params.pageSize ? ctx.params.pageSize : 10,
     pageIndex: ctx.params.pageSize ? ctx.params.pageSize : 1,
-  }))
-    // console.log('====================================');
-    // console.log(res);
-    // console.log('====================================');
+  })
+  // console.log('====================================');
+  // console.log(res);
+  // console.log('====================================');
   let resultData = res.data[1].map(x => {
     return {
       author: x.author,
@@ -43,7 +43,7 @@ router.get('/blogs', async (ctx, next) => {
   }
 })
 
-// 新增博客
+// 新增博客或更新博客?
 router.post('/blog', async (ctx, next) => {
   console.log('====================================');
   console.log('传回的信息', ctx.request.body);
@@ -54,15 +54,14 @@ router.post('/blog', async (ctx, next) => {
   } else {
     delete requestData.id;
   }
-  let sql = INSERT_TABLE('bloglist', requestData)
-  let res = await query(sql)
+  let res = await INSERT_TABLE('bloglist', requestData)
   console.log('====================================');
   console.log(res);
   console.log('====================================');
   if (res.success) {
     ctx.response.body = {
       code: 200,
-      message: '新增成功'
+      message: '保存成功'
     }
   } else {
     ctx.response.body = {
@@ -72,6 +71,24 @@ router.post('/blog', async (ctx, next) => {
   }
 })
 
-
+// 删除博客
+router.delete('/blog', async (ctx, next) => {
+  console.log('====================================');
+  console.log('删除传回的信息', ctx.request.body);
+  console.log('====================================');
+  let requestData = ctx.request.body;
+  let res = await DELETE_TABLE(requestData)
+  if (res.success) {
+    ctx.response.body = {
+      code: 200,
+      message: '删除成功'
+    }
+  } else {
+    ctx.response.body = {
+      code: res.code,
+      message: res.data
+    }
+  }
+})
 
 module.exports = router;
